@@ -14,7 +14,6 @@ function TrangNhanVien(props) {
                         />
                     </Link>
 
-
                     <Card.Body>
                         <Card.Text>{e.name}</Card.Text>
                     </Card.Body>
