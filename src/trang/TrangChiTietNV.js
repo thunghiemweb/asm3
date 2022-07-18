@@ -32,18 +32,6 @@ function TrangChiTietNV(props) {
                     <p>Số ngày đẵ làm thêm: {nv.overTime}</p>
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
 
 

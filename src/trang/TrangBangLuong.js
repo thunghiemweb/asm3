@@ -23,6 +23,9 @@ function TrangBangLuong(props) {
         <div className="TrangBangLuong">
             <h1>Bảng lương</h1>
 
+            {/* thêm tính năng mở rộng */}
+            {/* Tìm kiếm nhân viên theo thuộc tính */}
+
             <div className='container'>
                 <Breadcrumb>
                     <BreadcrumbItem><Link to="/">Nhân Viên</Link></BreadcrumbItem>
