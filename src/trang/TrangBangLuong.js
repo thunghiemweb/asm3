@@ -1,7 +1,11 @@
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+
 function TrangBangLuong(props) {
     const lcb = 3000000;
 
-    const mang = props.nv.map((e) => {
+    const mang = props.dsnv.map((e) => {
         return (
             <div key={e.id} className="col-6 col-sm-4 col-md-2 ">
                 <div style={{ padding: "30px" }}>
@@ -19,7 +23,14 @@ function TrangBangLuong(props) {
     return (
         <div className="TrangBangLuong">
             <h1>Bảng lương</h1>
+
             <div className='container'>
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/">Nhân Viên</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Bảng lương</BreadcrumbItem>
+                </Breadcrumb>
+
+
                 <div className='row'>
                     {mang}
                 </div>

@@ -7,6 +7,8 @@ import {
   Route,
 } from "react-router-dom";
 
+import { useState } from 'react';
+
 import { STAFFS } from "./shared/staffs"
 import { DEPARTMENTS } from "./shared/staffs"
 
@@ -18,6 +20,8 @@ import HTPhanChanTrang from "./trang/PhanChanTrang";
 import HTTrangChiTietNV from "./trang/TrangChiTietNV";
 
 function App() {
+
+
   return (
     <div className="App">
 
@@ -26,9 +30,10 @@ function App() {
 
       {/* Phần thân trang */}
       <Routes>
-        <Route path="/" element={<HTTrangNhanVien nv={STAFFS} />} />
-        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} nv={STAFFS} />} />
-        <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong nv={STAFFS} />} />
+        <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} />} />
+        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={STAFFS} />} />
+        <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong dsnv={STAFFS} />} />
+
         <Route path="staffs/*" element={<HTTrangChiTietNV />} />
       </Routes>
 

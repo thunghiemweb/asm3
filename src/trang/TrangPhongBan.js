@@ -1,8 +1,10 @@
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 
 function TrangPhongBan(props) {
-    const mangnv = props.nv;
+    const mangnv = props.dsnv;
 
     const mang = props.chucvu.map((e) => {
         return (
@@ -24,6 +26,10 @@ function TrangPhongBan(props) {
             <h1>Phòng ban</h1>
 
             <div className='container'>
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/">Nhân Viên</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Phòng ban</BreadcrumbItem>
+                </Breadcrumb>
                 <div className='row'>
                     {mang}
                 </div>

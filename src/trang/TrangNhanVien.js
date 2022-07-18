@@ -1,16 +1,29 @@
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
+import { useCallback } from "react";
+
 
 function TrangNhanVien(props) {
 
-    const mang = props.nv.map((e) => {
+    const clickNV = (e) => {
+        console.log(e.name);
+    }
+
+    const mang = props.dsnv.map((e) => {
         return (
             <div key={e.id} className="col-6 col-sm-4 col-md-2 ">
                 <Card >
-                    <Link to={'staffs/' + e.id}><Card.Img src={e.image} /></Link>
+
+                    <Link to={'staffs/' + e.id}>
+                        <Card.Img src={e.image}
+                            onClick={clickNV(e)}
+                        />
+                    </Link>
+
                     <Card.Body>
                         <Card.Text>{e.name}</Card.Text>
                     </Card.Body>
+
                 </Card>
             </div>
         );
