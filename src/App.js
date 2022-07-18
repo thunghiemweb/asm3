@@ -28,7 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HTTrangNhanVien nv={STAFFS} />} />
         <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} nv={STAFFS} />} />
-        <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong />} />
+        <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong nv={STAFFS} />} />
         <Route path="staffs/*" element={<HTTrangChiTietNV />} />
       </Routes>
 
