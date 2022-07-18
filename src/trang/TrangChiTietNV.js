@@ -5,7 +5,6 @@ import dateFormat from "dateformat";
 
 
 function TrangChiTietNV(props) {
-    //console.log(props);
     const nv = props.nv;
 
     return (

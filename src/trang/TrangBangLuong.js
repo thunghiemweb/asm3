@@ -1,10 +1,12 @@
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
+import { useState } from "react";
 
 function TrangBangLuong(props) {
 
-    const mang = props.dsnv.map((e) => {
+    const [BangLuong, setBangLuong] = useState(props);
+
+    const mang = BangLuong.dsnv.map((e) => {
         return (
             <div key={e.id} className="col-12 col-sm-6 col-md-4 " >
                 <div style={{ padding: "30px" }}>
@@ -19,12 +21,34 @@ function TrangBangLuong(props) {
     });
 
 
+
+    const objectComparisonCallback = (A, B) => {
+        if (A.annualLeave < B.annualLeave) {
+            return -1
+        }
+
+        if (A.annualLeave > B.annualLeave) {
+            return 1
+        }
+        return 0
+    }
+
+    function caodenthap() {
+        alert('cao den thap');
+        console.log(BangLuong);
+        setBangLuong(BangLuong.sort(objectComparisonCallback));
+    }
+
+
+
     return (
         <div className="TrangBangLuong">
             <h1>Bảng lương</h1>
 
-            {/* thêm tính năng mở rộng */}
-            {/* Tìm kiếm nhân viên theo thuộc tính */}
+            {/* sắp xếp lương từ cao đến thấp */}
+
+            <button onClick={caodenthap}>Sắp xếp lương từ cao đến thấp</button>
+
 
             <div className='container'>
                 <Breadcrumb>
