@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import { STAFFS } from "./shared/staffs"
+import { DEPARTMENTS } from "./shared/staffs"
 
 import HTThanhDieuHuong from "./trang/ThanhDieuHuong";
 import HTTrangBangLuong from "./trang/TrangBangLuong";
@@ -26,7 +27,7 @@ function App() {
       {/* Phần thân trang */}
       <Routes>
         <Route path="/" element={<HTTrangNhanVien nv={STAFFS} />} />
-        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan />} />
+        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} nv={STAFFS} />} />
         <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong />} />
         <Route path="staffs/*" element={<HTTrangChiTietNV />} />
       </Routes>
