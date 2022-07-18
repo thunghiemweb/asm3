@@ -2,12 +2,13 @@ import './App.css';
 
 import React from 'react'
 
+import { useState } from 'react';
+
 import {
   Routes,
   Route,
 } from "react-router-dom";
 
-import { useState } from 'react';
 
 import { STAFFS } from "./shared/staffs"
 import { DEPARTMENTS } from "./shared/staffs"
@@ -19,7 +20,12 @@ import HTTrangPhongBan from "./trang/TrangPhongBan";
 import HTPhanChanTrang from "./trang/PhanChanTrang";
 import HTTrangChiTietNV from "./trang/TrangChiTietNV";
 
-function App() {
+function App(props) {
+
+
+
+  // Function nhận dữ liệu từ Child component 
+  const [word, setWord] = useState(null)
 
 
   return (
@@ -28,13 +34,15 @@ function App() {
       {/* Phần đầu trang */}
       <HTThanhDieuHuong />
 
+      {/* <h1>----- {word} </h1> */}
+
       {/* Phần thân trang */}
       <Routes>
-        <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} />} />
+        <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} ChonNV={word => setWord(word)} />} />
         <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={STAFFS} />} />
         <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong dsnv={STAFFS} />} />
 
-        <Route path="staffs/*" element={<HTTrangChiTietNV />} />
+        <Route path="staffs/*" element={<HTTrangChiTietNV nv={word} />} />
       </Routes>
 
 
