@@ -23,11 +23,11 @@ function TrangBangLuong(props) {
 
     function caodenthap() {
         alert('Đã sắp xếp lương từ cao đền thấp');
-        setdsnv(dsnv.sort((a, b) => tinhluong(a) - tinhluong(b)));
+        setdsnv(dsnv.sort((a, b) => tinhluong(b) - tinhluong(a)));
     }
     function thapdencao() {
         alert('Đã xắp sếp lương từ thấp đến cao');
-        setdsnv(dsnv.sort((a, b) => tinhluong(b) - tinhluong(a)));
+        setdsnv(dsnv.sort((a, b) => tinhluong(a) - tinhluong(b)));
     }
 
     function tinhluong(e) {
