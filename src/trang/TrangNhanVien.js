@@ -23,12 +23,20 @@ function TrangNhanVien(props) {
         );
     });
 
+    function timkiem() {
+
+    }
+
 
     return (
 
         <div className="TrangNhanVien">
             <h1>Nhân viên</h1>
             <div className='container'>
+                <div>
+                    <input type="text" name="name" />
+                    <button onClick={timkiem}>Tìm kiếm</button>
+                </div>
 
                 <div className='row'>
                     {mang}

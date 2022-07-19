@@ -22,7 +22,7 @@ function TrangBangLuong(props) {
 
 
     function caodenthap() {
-        alert('Đã sắp xếp lương từ cao đền thấp');
+        alert('Đã sắp xếp lương từ cao đến thấp');
         setdsnv(dsnv.sort((a, b) => tinhluong(b) - tinhluong(a)));
     }
     function thapdencao() {
@@ -33,8 +33,6 @@ function TrangBangLuong(props) {
     function tinhluong(e) {
         return 3000000 * e.salaryScale + 200000 * e.overTime;
     }
-
-
 
     return (
         <div className="TrangBangLuong">
