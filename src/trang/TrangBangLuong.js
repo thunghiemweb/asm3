@@ -2,6 +2,9 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 
+import Card from 'react-bootstrap/Card';
+
+
 function TrangBangLuong(props) {
 
     const [dsnv, setdsnv] = useState(props.dsnv);
@@ -9,14 +12,18 @@ function TrangBangLuong(props) {
     const mang = dsnv.map((e) => {
         return (
             <div key={e.id} className="col-12 col-sm-6 col-md-4 " >
-                <div style={{ padding: "30px" }}>
-                    <h5>{e.name}</h5>
-                    <p style={{ textAlign: "left" }}>Mã nhân viên:{e.id}</p>
-                    <p style={{ textAlign: "left" }}>Hệ số lương:{e.salaryScale}</p>
-                    <p style={{ textAlign: "left" }}>Số ngày làm thêm:{e.overTime}</p>
-                    <h6 >Lương: {new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 3 }).format(tinhluong(e))}</h6>
-                </div>
+                <Card >
+
+                    <Card.Body>
+                        <Card.Title>{e.name}</Card.Title>
+                        <Card.Text>Mã nhân viên:{e.id}</Card.Text>
+                        <Card.Text>Hệ số lương:{e.salaryScale}</Card.Text>
+                        <Card.Text>Số ngày làm thêm:{e.overTime}</Card.Text>
+                        <Card.Text>Lương: {new Intl.NumberFormat('vi-VN', { maximumSignificantDigits: 3 }).format(tinhluong(e))}</Card.Text>
+                    </Card.Body>
+                </Card>
             </div>
+
         );
     });
 

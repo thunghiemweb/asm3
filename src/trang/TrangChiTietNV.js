@@ -1,8 +1,14 @@
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
+import Card from 'react-bootstrap/Card';
 import dateFormat from "dateformat";
 
+const styles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // height: '100vh',
+};
 
 function TrangChiTietNV(props) {
     const nv = props.nv;
@@ -11,34 +17,32 @@ function TrangChiTietNV(props) {
         <div className="TrangChiTietNV">
 
             <h1>Chi tiết nhân viên</h1>
-            <div className='container'>
+            <div className='container' >
+
                 <Breadcrumb>
                     <BreadcrumbItem><Link to="/">Nhân Viên</Link></BreadcrumbItem>
                     <BreadcrumbItem active>{nv.id}</BreadcrumbItem>
                 </Breadcrumb>
-                <div>
-                    <div className="col-12 col-sm-4 col-md-3 "
-                        style={{ float: "left", height: "100%" }}>
-                        <img src={nv.image} alt="anh nv" style={{ height: "80%", width: "80%" }} />
 
-                    </div>
-                    <div className="col-12 col-sm-8 col-md-9 "
-                        style={{ textAlign: "left", lineHeight: ".2", height: "100%", fontSize: "14px" }}>
+                <div style={styles}>
+                    <Card style={{ width: '18rem' }}>
 
-                        <h4>Họ và tên: {nv.name}</h4>
-                        <p >Ngày vào công ty: {dateFormat(nv.startDate, "dd/mm/yyyy")}</p>
-                        <p>Phòng ban: {nv.department.name}</p>
-                        <p>Số ngày nghỉ còn lại: {nv.annualLeave}</p>
-                        <p>Số ngày đẵ làm thêm: {nv.overTime}</p>
+                        <Card.Img src={nv.image} />
 
-                    </div>
+                        <Card.Body>
+
+                            <Card.Title>{nv.name}</Card.Title>
+                            <Card.Text style={{ textAlign: "left" }}>Ngày vào công ty: {dateFormat(nv.startDate, "dd/mm/yyyy")}</Card.Text>
+                            <Card.Text style={{ textAlign: "left" }}>Phòng ban: {nv.department.name}</Card.Text>
+                            <Card.Text style={{ textAlign: "left" }}>Số ngày nghỉ còn lại: {nv.annualLeave} ngày</Card.Text>
+                            <Card.Text style={{ textAlign: "left" }}>Số ngày đã làm thêm: {nv.overTime} ngày</Card.Text>
+                        </Card.Body>
+
+                    </Card>
                 </div>
 
 
             </div>
-
-
-
 
         </div >
     );

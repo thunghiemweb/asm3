@@ -20,6 +20,8 @@ import HTTrangPhongBan from "./trang/TrangPhongBan";
 import HTPhanChanTrang from "./trang/PhanChanTrang";
 import HTTrangChiTietNV from "./trang/TrangChiTietNV";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 function App(props) {
 
 
