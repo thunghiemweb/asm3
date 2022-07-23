@@ -1,9 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import { useState } from "react";
+
 
 function TrangNhanVien(props) {
 
-    const mang = props.dsnv.map((e) => {
+    const listNV = props.dsnv;
+
+    const HienThiListNhanVien = listNV.map((e) => {
         return (
             <div key={e.id} className="col-6 col-sm-4 col-md-2 ">
                 <Card >
@@ -22,9 +26,16 @@ function TrangNhanVien(props) {
         );
     });
 
-    function timkiem() {
 
-    }
+
+
+    const inputRef = useState(null);
+
+    const handleSubmit = () => {
+        alert("Không tìm thấy " + inputRef.current.value);
+    };
+
+
 
 
     return (
@@ -32,13 +43,30 @@ function TrangNhanVien(props) {
         <div className="TrangNhanVien">
             <h1>Nhân viên</h1>
             <div className='container'>
-                <div>
-                    <input type="text" name="name" />
-                    <button onClick={timkiem}>Tìm kiếm</button>
+
+                {/* Tìm kiếm nhân viên */}
+                <div style={{ margin: "10px" }}>
+
+                    <input
+                        style={{ margin: "10px" }}
+                        type="text"
+                        placeholder="Type..."
+                        ref={inputRef}
+                    />
+                    <button
+                        style={{ margin: "10px" }}
+                        onClick={handleSubmit}>
+                        Tìm kiếm</button>
+
                 </div>
 
+
+
+
+                {/* Hiển thị danh sách nhan vien */}
+
                 <div className='row'>
-                    {mang}
+                    {HienThiListNhanVien}
                 </div>
 
             </div>

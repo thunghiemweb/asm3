@@ -10,3 +10,42 @@ Tình huống 3: Xác thực dữ liệu biểu mẫu (validate form) trong ch�
 
 
 Sử dụng chức năng thêm nhân viên và chuẩn hoá dữ liệu (validate) form sử dụng react-redux-form.
+
+# controlled
+import React, { useState } from "react";
+
+function App (props) {
+    const [message, updateMessage] = useState("");
+    
+    return (
+        <div className="App" style={{ height: "20px" }}>
+        <div className="container">
+            <input
+            type="text"
+            placeholder="Enter message here.."
+            value={message}
+            onChange={(event) => updateMessage(event.target.value)}
+            />
+            <p>the message is: {message}</p>
+        </div>
+        </div>
+    );
+    };
+export default App;
+
+# uncontrolled
+
+import { useRef } from "react";
+    const NameForm = () => {
+      const inputRef = useRef(null);
+      const handleSubmit = () => {
+      alert(inputRef.current.value);
+      };
+      return (
+      <div>
+        <input type="text" placeholder="Type..." ref={inputRef} />
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
+      );
+    };
+    export default NameForm;
