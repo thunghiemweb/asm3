@@ -3,20 +3,15 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { useRef } from 'react'
 
-
 function TrangNhanVien(props) {
 
     const [ListNhanVien, setListNhanVien] = useState(props.dsnv);
-
-
 
     // hàm này trả về nhân viên phù hợp
     function TimText(a, b) {
         if (b.name.toLowerCase().search(a.toLowerCase()) !== -1)
             return b;
     }
-
-
 
     const TimNhanVien = (nv) => {
         setListNhanVien(props.dsnv.filter((e) => TimText(nv, e)));
@@ -50,6 +45,9 @@ function TrangNhanVien(props) {
         TimNhanVien(inputRef.current.value);
     };
 
+    const handleTroLai = () => {
+        setListNhanVien(props.dsnv);
+    };
 
     return (
 
@@ -70,6 +68,16 @@ function TrangNhanVien(props) {
                         style={{ margin: "10px" }}
                         onClick={handleSubmit}>
                         Tìm kiếm</button>
+                    <button
+                        style={{ margin: "10px" }}
+                        onClick={handleTroLai}>
+                        Trở lại</button>
+
+                    <Link to={'LinkTrangTaoNhanVienMoi/'} >
+                        <button
+                            style={{ margin: "10px" }}>
+                            Thêm Nhân Viên</button>
+                    </Link>
 
                 </div>
 

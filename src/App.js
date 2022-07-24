@@ -19,6 +19,7 @@ import HTTrangNhanVien from "./trang/TrangNhanVien";
 import HTTrangPhongBan from "./trang/TrangPhongBan";
 import HTPhanChanTrang from "./trang/PhanChanTrang";
 import HTTrangChiTietNV from "./trang/TrangChiTietNV";
+import HTTrangTaoNhanVienMoi from "./trang/TrangTaoNhanVienMoi";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,7 +27,7 @@ function App(props) {
 
 
 
-  // Function nhận dữ liệu từ Child component 
+  // useState nhận dữ liệu từ Child component 
   const [word, setWord] = useState(null)
 
 
@@ -40,11 +41,14 @@ function App(props) {
 
       {/* Phần thân trang */}
       <Routes>
-        <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} ChonNV={word => setWord(word)} />} />
+
         <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={STAFFS} />} />
         <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong dsnv={STAFFS} />} />
 
+        <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} ChonNV={word => setWord(word)} />} />
         <Route path="staffs/*" element={<HTTrangChiTietNV nv={word} />} />
+
+        <Route path="LinkTrangTaoNhanVienMoi" element={<HTTrangTaoNhanVienMoi />} />
       </Routes>
 
 
