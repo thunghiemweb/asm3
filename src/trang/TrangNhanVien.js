@@ -1,18 +1,35 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
+import { useRef } from 'react'
 
 
 function TrangNhanVien(props) {
 
-    const listNV = props.dsnv;
+    const [ListNhanVien, setListNhanVien] = useState(props.dsnv);
 
-    const HienThiListNhanVien = listNV.map((e) => {
+
+
+    // hàm này trả về nhân viên phù hợp
+    function TimText(a, b) {
+        if (b.name.toLowerCase().search(a.toLowerCase()) !== -1)
+            return b;
+    }
+
+
+
+    const TimNhanVien = (nv) => {
+        setListNhanVien(props.dsnv.filter((e) => TimText(nv, e)));
+    }
+
+    const HienThiListNhanVien = ListNhanVien.map((e) => {
         return (
             <div key={e.id} className="col-6 col-sm-4 col-md-2 ">
                 <Card >
                     <Link to={'staffs/' + e.id} >
                         <Card.Img src={e.image}
+
+                            // Gửi đối tượng nhân viên được click đến App.js
                             onClick={() => props.ChonNV(e)}
                         />
                     </Link>
@@ -27,15 +44,11 @@ function TrangNhanVien(props) {
     });
 
 
-
-
-    const inputRef = useState(null);
+    const inputRef = useRef(null);
 
     const handleSubmit = () => {
-        alert("Không tìm thấy " + inputRef.current.value);
+        TimNhanVien(inputRef.current.value);
     };
-
-
 
 
     return (
@@ -61,8 +74,6 @@ function TrangNhanVien(props) {
                 </div>
 
 
-
-
                 {/* Hiển thị danh sách nhan vien */}
 
                 <div className='row'>
@@ -72,10 +83,6 @@ function TrangNhanVien(props) {
             </div>
         </div>
     );
-
-
-
-
 
 }
 

@@ -21,7 +21,7 @@ function TrangChiTietNV(props) {
 
                 <Breadcrumb>
                     <BreadcrumbItem><Link to="/">Nhân Viên</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>{nv.id}</BreadcrumbItem>
+                    <BreadcrumbItem active>{nv.name}</BreadcrumbItem>
                 </Breadcrumb>
 
                 <div style={styles}>
