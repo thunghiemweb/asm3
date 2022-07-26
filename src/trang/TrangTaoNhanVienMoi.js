@@ -1,10 +1,28 @@
+import {
+    Form,
 
-import { Form, } from 'reactstrap';
+} from 'reactstrap';
 import React, { useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
+
 import DatePicker from "react-datepicker";
 import dateFormat from "dateformat";
+
 import "react-datepicker/dist/react-datepicker.css";
+
+const StyleDiv = {
+
+    maxWidth: "300px",
+    margin: 'auto',
+    padding: '10px',
+    alignItems: 'center',
+    border: '3px solid #73AD21',
+    backgroundColor: 'powderblue'
+};
+
+const divText = {
+    textAlign: 'left',
+};
+
 
 function TrangTaoNhanVienMoi() {
 
@@ -56,100 +74,110 @@ function TrangTaoNhanVienMoi() {
     return (
         <div className="TrangTaoNhanVienMoi">
 
-            <div className="container">
+            <div className="input-container">
                 <h1>Trang Tạo Nhân viên Mới</h1>
+
                 <Form onSubmit={handleSubmit}>
 
-                    <div>
-
-                        <div>
-                            <label>Họ và tên</label>
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                onChange={handleChange} />
-                        </div>
-
-                        <div>
-                            <label>Ngày sinh</label>
-                            <DatePicker
-                                wrapperClassName="date-picker"
-                                id="doB"
-                                name="doB"
-                                dateFormat="dd/MM/yyyy"
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)
-                                }
-
-                                value={startDate}
-                            />
-                        </div>
+                    <div style={StyleDiv}>
+                        <p style={divText}>Họ và tên: </p>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            onChange={handleChange} />
+                    </div>
 
 
-                        <div>
-                            <label style={{ float: "left" }} >Hệ số lương: </label>
-                            <input
-                                id="salaryScale"
-                                name="salaryScale"
-                                type="text"
-                                onChange={handleChange} />
-                        </div>
+                    <div style={StyleDiv}>
+                        <p style={divText}>Ngày sinh</p>
+                        <DatePicker
 
-                        <div>
-                            <label style={{ float: "left" }}>Ngày vào công ty</label>
-                            <DatePicker
-                                id="doB"
-                                name="doB"
-                                dateFormat="dd/MM/yyyy"
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)
-                                }
+                            style={{ width: "100%" }}
+                            wrapperClassName="date-picker"
+                            id="doB"
+                            name="doB"
+                            dateFormat="dd/MM/yyyy"
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)
+                            }
 
-                                value={startDate}
-                            />
-                        </div>
-
-                        <div>
-                            <label>Chức vụ</label>
-
-                            <select
-                                id="doB"
-                                name="doB"
-                                // value="{this.state.age}"
-                                onChange={handleChange}>
-
-                                <option value="teen">Less than 18</option>
-                                <option value="adult">18+</option>
-
-                            </select>
-
-                        </div>
-
-                        <div>
-                            <label>Số ngày nghỉ phép</label>
-                            <input
-                                id="annualLeave"
-                                name="annualLeave"
-                                type="text"
-                                onChange={handleChange} />
-                        </div>
-
-
-                        <div>
-                            <label>Số ngày làm thêm</label>
-                            <input
-                                id="overTime"
-                                name="overTime"
-                                type="text"
-                                onChange={handleChange} />
-
-                        </div>
-
+                            value={startDate}
+                        />
 
                     </div>
 
+                    <div style={StyleDiv}>
+                        <p style={divText}>Hệ số lương: </p>
+                        <input
+                            id="salaryScale"
+                            name="salaryScale"
+                            type="text"
+                            onChange={handleChange} />
+                    </div>
+
+
+
+
+                    <div style={StyleDiv}>
+                        <p style={divText}>Ngày vào công ty</p>
+
+                        <DatePicker
+                            id="doB"
+                            name="doB"
+                            dateFormat="dd/MM/yyyy"
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)
+                            }
+
+                            value={startDate}
+                        />
+
+                    </div>
+
+                    <div style={StyleDiv}>
+                        <p style={divText}>Chức vụ</p>
+
+                        <select
+                            id="doB"
+                            name="doB"
+                            onChange={handleChange}
+                            style={{ width: '190px' }}
+
+                        >
+
+                            <option
+                                value="teen">Less than 18</option>
+                            <option value="adult">18+</option>
+
+                        </select>
+                    </div>
+
+                    <div style={StyleDiv}>
+                        <p style={divText}>Số ngày nghỉ phép</p>
+                        <input
+                            id="annualLeave"
+                            name="annualLeave"
+                            type="text"
+                            onChange={handleChange} />
+                    </div>
+
+
+                    <div style={StyleDiv}>
+                        <p style={divText}>Số ngày làm thêm</p>
+                        <input
+                            id="overTime"
+                            name="overTime"
+                            type="text"
+                            onChange={handleChange} />
+
+                    </div>
+
+
                     <button>Thêm nhân viên</button>
+
+
+
 
                 </Form>
 
