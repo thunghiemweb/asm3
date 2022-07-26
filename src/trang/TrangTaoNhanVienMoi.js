@@ -92,8 +92,6 @@ function TrangTaoNhanVienMoi() {
                     <div style={StyleDiv}>
                         <p style={divText}>Ngày sinh</p>
                         <DatePicker
-
-                            style={{ width: "100%" }}
                             wrapperClassName="date-picker"
                             id="doB"
                             name="doB"
@@ -101,10 +99,8 @@ function TrangTaoNhanVienMoi() {
                             selected={startDate}
                             onChange={(date) => setStartDate(date)
                             }
-
                             value={startDate}
                         />
-
                     </div>
 
                     <div style={StyleDiv}>
@@ -123,33 +119,30 @@ function TrangTaoNhanVienMoi() {
                         <p style={divText}>Ngày vào công ty</p>
 
                         <DatePicker
-                            id="doB"
-                            name="doB"
+                            id="startDate"
+                            name="startDate"
                             dateFormat="dd/MM/yyyy"
                             selected={startDate}
                             onChange={(date) => setStartDate(date)
                             }
-
                             value={startDate}
                         />
-
                     </div>
 
                     <div style={StyleDiv}>
                         <p style={divText}>Chức vụ</p>
 
                         <select
-                            id="doB"
-                            name="doB"
+                            id="department"
+                            name="department"
                             onChange={handleChange}
                             style={{ width: '190px' }}
-
                         >
-
-                            <option
-                                value="teen">Less than 18</option>
-                            <option value="adult">18+</option>
-
+                            <option value="Dept01">Sale</option>
+                            <option value="Dept02">HR</option>
+                            <option value="Dept03">Marketing</option>
+                            <option value="Dept04">IT</option>
+                            <option value="Dept05">Finance</option>
                         </select>
                     </div>
 
@@ -173,11 +166,7 @@ function TrangTaoNhanVienMoi() {
 
                     </div>
 
-
                     <button>Thêm nhân viên</button>
-
-
-
 
                 </Form>
 
