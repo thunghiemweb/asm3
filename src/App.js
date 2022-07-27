@@ -20,6 +20,7 @@ import HTTrangPhongBan from "./trang/TrangPhongBan";
 import HTPhanChanTrang from "./trang/PhanChanTrang";
 import HTTrangChiTietNV from "./trang/TrangChiTietNV";
 import HTTrangTaoNhanVienMoi from "./trang/TrangTaoNhanVienMoi";
+import HTTrangThemNhanVien from "./trang/TrangThemNhanVien";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -49,6 +50,9 @@ function App(props) {
         <Route path="staffs/*" element={<HTTrangChiTietNV nv={word} />} />
 
         <Route path="LinkTrangTaoNhanVienMoi" element={<HTTrangTaoNhanVienMoi />} />
+
+
+        <Route path="LinkTrangThemNhanVien" element={<HTTrangThemNhanVien />} />
       </Routes>
 
 

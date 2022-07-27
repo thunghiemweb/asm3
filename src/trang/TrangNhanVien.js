@@ -73,7 +73,8 @@ function TrangNhanVien(props) {
                         onClick={handleTroLai}>
                         Trở lại</button>
 
-                    <Link to={'LinkTrangTaoNhanVienMoi/'} >
+                    {/* <Link to={'LinkTrangTaoNhanVienMoi/'} > */}
+                    <Link to={'LinkTrangThemNhanVien/'} >
                         <button
                             style={{ margin: "10px" }}>
                             Thêm Nhân Viên</button>
