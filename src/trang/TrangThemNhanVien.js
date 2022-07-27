@@ -3,7 +3,8 @@ import {
     Button, Modal, ModalHeader, ModalBody, ModalFooter,
     Form,
     Row, Col, Label,
-    FormFeedback
+    FormFeedback,
+    Input,
 } from 'reactstrap';
 
 // id: "",
@@ -31,9 +32,9 @@ class TrangThemNhanVien extends React.Component {
             salaryScale: '',
             startDate: '',
             department: '',
-            annualLeave: '',
-            overTime: '',
-            image: '',
+            annualLeave: 0,
+            overTime: 0,
+            image: '/assets/images/alberto.png',
             touched: {
                 name: false,
                 doB: false,
@@ -76,6 +77,7 @@ class TrangThemNhanVien extends React.Component {
     handleSubmit(event) {
         // console.log('Current State is: ' + JSON.stringify(values));
         // alert('Current State is: ' + JSON.stringify(values));
+        console.log(event);
         event.preventDefault();
     }
 
@@ -85,7 +87,7 @@ class TrangThemNhanVien extends React.Component {
         });
     }
 
-    validate(firstname, lastname, telnum, email) {
+    validate(name, doB, salaryScale) {
         const errors = {
             name: '',
             doB: '',
@@ -96,19 +98,23 @@ class TrangThemNhanVien extends React.Component {
             overTime: '',
         };
 
-        if (this.state.touched.name && firstname.length < 3)
-            errors.firstname = 'First Name should be >= 3 characters';
-        else if (this.state.touched.firstname && firstname.length > 10)
-            errors.firstname = 'First Name should be <= 10 characters';
+        if (this.state.touched.name && name.length < 3)
+            errors.name = 'Họ và tên cần nhiều hơn 3 ký tự';
+        else if (this.state.touched.name && name.length > 30)
+            errors.name = 'Họ và tên nhỏ hơn 30 ký tự';
 
-        const reg = /^\d+$/;
-        if (this.state.touched.telnum && !reg.test(telnum))
-            errors.telnum = 'Tel. Number should contain only numbers';
+        if (this.state.touched.doB)
+            errors.doB = "Ngày sinh không được để trống";
 
-        if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
-            errors.email = 'Email should contain a @';
+        if (this.state.touched.salaryScale > 0)
+            errors.salaryScale = "Hệ số lương không được để trống";
+
+        if (this.state.touched.startDate)
+            errors.startDate = "Ngày vào công ty không được để trống";
+
 
         return errors;
+
     }
 
 
@@ -137,9 +143,9 @@ class TrangThemNhanVien extends React.Component {
                         <Form onSubmit={this.handleSubmit}>
 
                             <Row className="form-group">
-                                <Label htmlFor="firstname" md={3}>Họ và tên</Label>
-                                <Col md={9}>
-                                    <input
+                                <Label htmlFor="name" md={5}>Họ và tên</Label>
+                                <Col md={7}>
+                                    <Input
                                         type="text"
                                         id="name"
                                         name="name"
@@ -156,18 +162,118 @@ class TrangThemNhanVien extends React.Component {
                             </Row>
 
                             <Row className="form-group">
-                                <Label htmlFor="firstname" md={3}>First Name</Label>
-                                <Col md={9}>
-                                    <input
-                                        label="Ngày sinh"
+                                <Label htmlFor="doB" md={5}>Ngày sinh</Label>
+                                <Col md={7}>
+                                    <Input
+                                        label="doB"
                                         name="doB"
                                         type="date"
-                                        // value={value}
                                         className="form-control"
+                                        value={this.state.doB}
+                                        valid={errors.doB === ''}
+                                        invalid={errors.doB !== ''}
+                                        onBlur={this.handleBlur('doB')}
                                         onChange={this.handleInputChange}
                                     />
+                                    <FormFeedback>{errors.doB}</FormFeedback>
                                 </Col>
                             </Row>
+
+                            <Row className="form-group">
+                                <Label htmlFor="salaryScale" md={5}>Hệ số lương</Label>
+                                <Col md={7}>
+                                    <Input
+                                        label="salaryScale"
+                                        name="salaryScale"
+                                        type="number"
+                                        pattern="[0-9*]"
+                                        className="form-control"
+                                        value={this.state.salaryScale}
+                                        valid={errors.salaryScale === ''}
+                                        invalid={errors.salaryScale !== ''}
+                                        onBlur={this.handleBlur('salaryScale')}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    <FormFeedback>{errors.salaryScale}</FormFeedback>
+                                </Col>
+                            </Row>
+
+
+                            <Row className="form-group">
+                                <Label htmlFor="startDate" md={5}>Ngày vào công ty</Label>
+                                <Col md={7}>
+                                    <Input
+                                        label="startDate"
+                                        name="startDate"
+                                        type="date"
+                                        className="form-control"
+                                        value={this.state.startDate}
+                                        valid={errors.startDate === ''}
+                                        invalid={errors.startDate !== ''}
+                                        onBlur={this.handleBlur('startDate')}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    <FormFeedback>{errors.startDate}</FormFeedback>
+                                </Col>
+                            </Row>
+
+
+                            <Row className="form-group">
+                                <Label htmlFor="department" md={5}>Chức vụ</Label>
+                                <Col md={7}>
+                                    <select className="form-control">
+
+                                        <option selected value="Sale">Sale</option>
+
+                                        <option value="HR">HR</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Finance">Finance</option>
+
+                                    </select>
+                                    <FormFeedback>{errors.department}</FormFeedback>
+                                </Col>
+                            </Row>
+
+                            <Row className="form-group">
+                                <Label htmlFor="annualLeave" md={5}>Số ngày nghỉ còn lại</Label>
+                                <Col md={7}>
+                                    <Input
+                                        label="annualLeave"
+                                        name="annualLeave"
+                                        type="number"
+                                        pattern="[0-9*]"
+                                        className="form-control"
+                                        value={this.state.annualLeave}
+                                        valid={errors.annualLeave === ''}
+                                        invalid={errors.annualLeave !== ''}
+                                        onBlur={this.handleBlur('annualLeave')}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    <FormFeedback>{errors.annualLeave}</FormFeedback>
+                                </Col>
+                            </Row>
+
+
+                            <Row className="form-group">
+                                <Label htmlFor="overTime" md={5}>Số ngày làm thêm</Label>
+                                <Col md={7}>
+                                    <Input
+                                        label="overTime"
+                                        name="overTime"
+                                        type="number"
+                                        pattern="[0-9*]"
+                                        className="form-control"
+                                        value={this.state.overTime}
+                                        valid={errors.overTime === ''}
+                                        invalid={errors.overTime !== ''}
+                                        onBlur={this.handleBlur('overTime')}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    <FormFeedback>{errors.overTime}</FormFeedback>
+                                </Col>
+                            </Row>
+
 
 
 
@@ -182,9 +288,9 @@ class TrangThemNhanVien extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Do Something</Button>
+                        <Button type="submit" color="primary" onClick={this.toggle}>Do Something</Button>
 
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        <Button type="submit" color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>

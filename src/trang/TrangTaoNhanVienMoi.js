@@ -112,9 +112,6 @@ function TrangTaoNhanVienMoi() {
                             onChange={handleChange} />
                     </div>
 
-
-
-
                     <div style={StyleDiv}>
                         <p style={divText}>Ngày vào công ty</p>
 
