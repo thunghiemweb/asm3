@@ -7,24 +7,17 @@ import {
     Input,
 } from 'reactstrap';
 
-// id: "",
-// name: "",
-// doB: "",
-// salaryScale: "",
-// startDate: "",
-// department: "",
-// annualLeave: "",
-// overTime: "",
-// image: "/assets/images/alberto.png",
-
-
-
-
 class TrangThemNhanVien extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+
+            fruit: "banana",
+
+
+
+
             modal: true,
             id: '',
             name: '',
@@ -45,7 +38,7 @@ class TrangThemNhanVien extends React.Component {
                 overTime: false,
 
             },
-            ListChucVu: [],
+
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +46,7 @@ class TrangThemNhanVien extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.toggle = this.toggle.bind(this);
 
-
+        this.handleChange = this.handleChange.bind(this);
 
 
 
@@ -72,18 +65,15 @@ class TrangThemNhanVien extends React.Component {
         this.setState({
             modal: !this.state.modal
         });
-
-
-        // this.setState({
-        //     ListChucVu: [
-        //         { id: 'AFG', name: 'Afghanistan' },
-        //         { id: 'ALA', name: 'Åland Islands' },
-        //         { id: 'ALB', name: 'Albania' }
-        //     ]
-        // });
-
-
     }
+
+
+    handleChange(e) {
+        console.log("Fruit Selected!!");
+        console.log(e.target.value);
+        this.setState({ fruit: e.target.value });
+    }
+
 
 
     // thay đổi nội dung cho vào state
@@ -127,6 +117,8 @@ class TrangThemNhanVien extends React.Component {
             overTime: '',
         };
 
+        // console.log(department);
+
 
         if (this.state.touched.name && name.length < 3)
             errors.name = 'Họ và tên cần nhiều hơn 3 ký tự';
@@ -145,11 +137,17 @@ class TrangThemNhanVien extends React.Component {
         if (this.state.touched.department && department === '')
             errors.department = "Chức vụ không được để trống";
 
-        if (this.state.touched.annualLeave && annualLeave <= 0)
+        if (this.state.touched.annualLeave && annualLeave < 0)
             errors.annualLeave = "Số ngày nghỉ còn lại không hợp lệ";
 
-        if (this.state.touched.overTime && overTime <= 0)
+        if (this.state.touched.overTime && overTime < 0)
             errors.overTime = "Số ngày làm thêm không hợp lệ";
+
+
+
+
+
+
         return errors;
 
     }
@@ -171,16 +169,24 @@ class TrangThemNhanVien extends React.Component {
             this.state.overTime,
         );
 
-
-
-        // const { ListChucVu } = this.state;
-
-        // let HTListChucVu = ListChucVu.length > 0
-        //     && ListChucVu.map((item, i) => {
-        //         return (
-        //             <option key={i} value={item.id}>{item.name}</option>
-        //         )
-        //     }, this);
+        const options = [
+            {
+                label: "Apple",
+                value: "apple",
+            },
+            {
+                label: "Mango",
+                value: "mango",
+            },
+            {
+                label: "Banana",
+                value: "banana",
+            },
+            {
+                label: "Pineapple",
+                value: "pineapple",
+            },
+        ];
 
 
 
@@ -273,18 +279,53 @@ class TrangThemNhanVien extends React.Component {
                             <Row className="form-group">
                                 <Label htmlFor="department" md={5}>Chức vụ</Label>
                                 <Col md={7}>
-                                    <select className="form-control">
-                                        {/* <HTListChucVu /> */}
 
-                                        {/* <option selected value="none"> </option>
+                                    <select
+                                        className="form-control"
+                                        value={this.state.fruit}
+                                        onChange={this.handleChange}>
+
+                                        {options.map((option) => (
+                                            <option
+                                                value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+
+
+
+                                    {/* <select
+                                        value={this.state.fruit}
+                                        onChange={this.handleInputChange}
+
+                                        onBlur={this.handleBlur('department')}
+
+                                        className="form-control">
+
+                                        
+                                        <option selected value="none"> </option>
                                         <option value="Sale">Sale</option>
 
                                         <option value="HR">HR</option>
                                         <option value="Marketing">Marketing</option>
                                         <option value="IT">IT</option>
-                                        <option value="Finance">Finance</option> */}
+                                        <option value="Finance">Finance</option>
 
-                                    </select>
+
+                                        {options.map((option) => (
+                                            <option
+                                                name='department'
+                                                value={this.state.fruit}
+                                                invalid={errors.department !== ''}
+                                                valid={errors.department === ''}
+
+                                            >
+                                                {option.label}
+                                            </option>
+                                        ))}
+
+                                    </select> */}
                                     <FormFeedback>{errors.department}</FormFeedback>
                                 </Col>
                             </Row>
@@ -347,7 +388,7 @@ class TrangThemNhanVien extends React.Component {
                         <Button type="submit" color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
-            </div>
+            </div >
         );
     }
 }
