@@ -7,6 +7,9 @@ function TrangNhanVien(props) {
 
     const [ListNhanVien, setListNhanVien] = useState(props.dsnv);
 
+
+
+
     // hàm này trả về nhân viên phù hợp
     function TimText(a, b) {
         if (b.name.toLowerCase().search(a.toLowerCase()) !== -1)

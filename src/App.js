@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 
-import { STAFFS } from "./shared/staffs"
+// import { STAFFS } from "./shared/staffs"
 import { DEPARTMENTS } from "./shared/staffs"
 
 import HTThanhDieuHuong from "./trang/ThanhDieuHuong";
@@ -19,7 +19,7 @@ import HTTrangNhanVien from "./trang/TrangNhanVien";
 import HTTrangPhongBan from "./trang/TrangPhongBan";
 import HTPhanChanTrang from "./trang/PhanChanTrang";
 import HTTrangChiTietNV from "./trang/TrangChiTietNV";
-import HTTrangTaoNhanVienMoi from "./trang/TrangTaoNhanVienMoi";
+
 import HTTrangThemNhanVien from "./trang/TrangThemNhanVien";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,6 +31,9 @@ function App(props) {
   // useState nhận dữ liệu từ Child component 
   const [word, setWord] = useState(null)
 
+  // Lấy danh sách nhân viên lưu trong bộ nhớ
+  const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
+  // console.log(sdfsfd);
 
   return (
     <div className="App">
@@ -49,10 +52,8 @@ function App(props) {
         <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} ChonNV={word => setWord(word)} />} />
         <Route path="staffs/*" element={<HTTrangChiTietNV nv={word} />} />
 
-        <Route path="LinkTrangTaoNhanVienMoi" element={<HTTrangTaoNhanVienMoi />} />
+        <Route path="LinkTrangThemNhanVien" element={<HTTrangThemNhanVien chucvu={DEPARTMENTS} />} />
 
-
-        <Route path="LinkTrangThemNhanVien" element={<HTTrangThemNhanVien />} />
       </Routes>
 
 

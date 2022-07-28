@@ -5,6 +5,7 @@ import {
     Row, Col, Label,
     FormFeedback,
     Input,
+
 } from 'reactstrap';
 
 class TrangThemNhanVien extends React.Component {
@@ -12,22 +13,19 @@ class TrangThemNhanVien extends React.Component {
         super(props);
 
         this.state = {
-
-            fruit: "banana",
-
-
-
-
             modal: true,
             id: '',
             name: '',
             doB: '',
-            salaryScale: '',
+            salaryScale: 1,
             startDate: '',
             department: '',
             annualLeave: 0,
             overTime: 0,
             image: '/assets/images/alberto.png',
+
+            // Lưu trạng thái đã bấm click vào input chưa
+            // Nếu bẩm vào rồi sẽ chuyển sang true nhờ hàm handleBlur
             touched: {
                 name: false,
                 doB: false,
@@ -46,42 +44,28 @@ class TrangThemNhanVien extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.toggle = this.toggle.bind(this);
 
-        this.handleChange = this.handleChange.bind(this);
-
-
-
-
-
-
-
-
-
+        console.log(props);
 
 
 
     }
 
+
+    // Ẩn hiện cửa sổ  modal
     toggle() {
         this.setState({
             modal: !this.state.modal
         });
     }
 
-
-    handleChange(e) {
-        console.log("Fruit Selected!!");
-        console.log(e.target.value);
-        this.setState({ fruit: e.target.value });
-    }
-
-
-
     // thay đổi nội dung cho vào state
     handleInputChange(event) {
         const target = event.target;
+        // Đối với checkbox
         const value = target.type === 'checkbox' ? target.checked : target.value;
 
         const name = target.name;
+
         // console.log(name + ":" + value);
 
         this.setState({
@@ -90,16 +74,44 @@ class TrangThemNhanVien extends React.Component {
 
     }
 
-    // sự kiện bấm
+    // sự kiện bấm button
     handleSubmit(event) {
-        // console.log('Current State is: ' + JSON.stringify(values));
-        // alert('Current State is: ' + JSON.stringify(values));
-        console.log(event);
+        // console.log(event);
+
+        // Lấy danh sách nhân viên lưu trong bộ nhớ
+        const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
+
+        console.log(this.state.department);
+
+        // // Thêm phần tử mới
+        STAFFS.push({
+            id: STAFFS.length + 1,
+            name: this.state.name,
+            doB: this.state.doB,
+            salaryScale: this.state.salaryScale,
+            startDate: this.state.startDate,
+            department: this.state.department,
+            annualLeave: this.state.annualLeave,
+            overTime: this.state.overTime,
+            image: '/assets/images/alberto.png',
+        });
+
+        // Lưu lại
+        localStorage.setItem("dsnv", JSON.stringify(STAFFS));
+
+        //console.log(JSON.parse(localStorage.getItem("dsnv")));
+
+
+
+
+
+        alert('Current State is: ' + JSON.stringify(this.state));
+
         event.preventDefault();
     }
 
+    // Xử lý thông báo lỗi từng dòng input
     handleBlur = (field) => (evt) => {
-
 
         this.setState({
             touched: { ...this.state.touched, [field]: true }
@@ -117,16 +129,15 @@ class TrangThemNhanVien extends React.Component {
             overTime: '',
         };
 
-        // console.log(department);
 
-
-        if (this.state.touched.name && name.length < 3)
-            errors.name = 'Họ và tên cần nhiều hơn 3 ký tự';
+        // Chỉ validate khi đã click lần đầu vào inputs
+        if (this.state.touched.name && name.length < 2)
+            errors.name = 'Yêu cầu nhập nhiều hơn 2 ký tự';
         else if (this.state.touched.name && name.length > 30)
             errors.name = 'Họ và tên nhỏ hơn 30 ký tự';
 
         if (this.state.touched.doB && doB === '')
-            errors.doB = "Ngày sinh không được để trống";
+            errors.doB = "Yêu cầu nhập";
 
         if (this.state.touched.salaryScale && salaryScale <= 0)
             errors.salaryScale = "Hệ số lương phải lớn hơn 0";
@@ -134,8 +145,11 @@ class TrangThemNhanVien extends React.Component {
         if (this.state.touched.startDate && startDate === '')
             errors.startDate = "Ngày vào công ty không được để trống";
 
-        if (this.state.touched.department && department === '')
-            errors.department = "Chức vụ không được để trống";
+        if (this.state.touched.department && department === "") {
+            errors.department = "Nhập thiếu chức vụ";
+        }
+
+
 
         if (this.state.touched.annualLeave && annualLeave < 0)
             errors.annualLeave = "Số ngày nghỉ còn lại không hợp lệ";
@@ -143,18 +157,8 @@ class TrangThemNhanVien extends React.Component {
         if (this.state.touched.overTime && overTime < 0)
             errors.overTime = "Số ngày làm thêm không hợp lệ";
 
-
-
-
-
-
         return errors;
-
     }
-
-
-
-
 
 
     render() {
@@ -168,26 +172,6 @@ class TrangThemNhanVien extends React.Component {
             this.state.annualLeave,
             this.state.overTime,
         );
-
-        const options = [
-            {
-                label: "Apple",
-                value: "apple",
-            },
-            {
-                label: "Mango",
-                value: "mango",
-            },
-            {
-                label: "Banana",
-                value: "banana",
-            },
-            {
-                label: "Pineapple",
-                value: "pineapple",
-            },
-        ];
-
 
 
 
@@ -256,10 +240,10 @@ class TrangThemNhanVien extends React.Component {
                                 </Col>
                             </Row>
 
-
                             <Row className="form-group">
                                 <Label htmlFor="startDate" md={5}>Ngày vào công ty</Label>
                                 <Col md={7}>
+
                                     <Input
                                         label="startDate"
                                         name="startDate"
@@ -275,58 +259,31 @@ class TrangThemNhanVien extends React.Component {
                                 </Col>
                             </Row>
 
-
                             <Row className="form-group">
                                 <Label htmlFor="department" md={5}>Chức vụ</Label>
                                 <Col md={7}>
 
                                     <select
                                         className="form-control"
-                                        value={this.state.fruit}
-                                        onChange={this.handleChange}>
-
-                                        {options.map((option) => (
-                                            <option
-                                                value={option.value}>
-                                                {option.label}
-                                            </option>
-                                        ))}
-                                    </select>
-
-
-
-                                    {/* <select
-                                        value={this.state.fruit}
+                                        name='department'
+                                        value={this.state.department}
                                         onChange={this.handleInputChange}
-
                                         onBlur={this.handleBlur('department')}
-
-                                        className="form-control">
-
-                                        
-                                        <option selected value="none"> </option>
-                                        <option value="Sale">Sale</option>
-
-                                        <option value="HR">HR</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="IT">IT</option>
-                                        <option value="Finance">Finance</option>
-
-
-                                        {options.map((option) => (
+                                    >
+                                        {this.props.chucvu.map((option, index) => (
                                             <option
-                                                name='department'
-                                                value={this.state.fruit}
-                                                invalid={errors.department !== ''}
-                                                valid={errors.department === ''}
-
+                                                key={index}
+                                                value={option.id}
                                             >
-                                                {option.label}
+                                                {option.name}
                                             </option>
                                         ))}
 
-                                    </select> */}
-                                    <FormFeedback>{errors.department}</FormFeedback>
+                                    </select>
+                                    {/* FormFeedback không hoạt động ở đây ??? */}
+                                    {/* <FormFeedback>{errors.department}</FormFeedback> */}
+                                    <p style={{ color: "red" }}>{errors.department}</p>
+
                                 </Col>
                             </Row>
 
@@ -349,7 +306,6 @@ class TrangThemNhanVien extends React.Component {
                                 </Col>
                             </Row>
 
-
                             <Row className="form-group">
                                 <Label htmlFor="overTime" md={5}>Số ngày làm thêm</Label>
                                 <Col md={7}>
@@ -369,24 +325,15 @@ class TrangThemNhanVien extends React.Component {
                                 </Col>
                             </Row>
 
-
-
-
-
+                            <ModalFooter>
+                                <Button type="submit" color="primary" onClick={this.toggle}>Thêm</Button>
+                                {/* <Button name="huy" type="submit" color="secondary" onClick={this.toggle}>Hủy</Button> */}
+                            </ModalFooter>
 
                         </Form>
 
-
-
-
-
-
                     </ModalBody>
-                    <ModalFooter>
-                        <Button type="submit" color="primary" onClick={this.toggle}>Do Something</Button>
 
-                        <Button type="submit" color="secondary" onClick={this.toggle}>Cancel</Button>
-                    </ModalFooter>
                 </Modal>
             </div >
         );
