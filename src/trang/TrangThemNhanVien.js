@@ -44,19 +44,45 @@ class TrangThemNhanVien extends React.Component {
                 annualLeave: false,
                 overTime: false,
 
-            }
+            },
+            ListChucVu: [],
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.toggle = this.toggle.bind(this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     toggle() {
         this.setState({
             modal: !this.state.modal
         });
+
+
+        // this.setState({
+        //     ListChucVu: [
+        //         { id: 'AFG', name: 'Afghanistan' },
+        //         { id: 'ALA', name: 'Åland Islands' },
+        //         { id: 'ALB', name: 'Albania' }
+        //     ]
+        // });
+
+
     }
 
 
@@ -66,6 +92,7 @@ class TrangThemNhanVien extends React.Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
 
         const name = target.name;
+        // console.log(name + ":" + value);
 
         this.setState({
             [name]: value
@@ -82,12 +109,14 @@ class TrangThemNhanVien extends React.Component {
     }
 
     handleBlur = (field) => (evt) => {
+
+
         this.setState({
             touched: { ...this.state.touched, [field]: true }
         });
     }
 
-    validate(name, doB, salaryScale) {
+    validate(name, doB, salaryScale, startDate, department, annualLeave, overTime) {
         const errors = {
             name: '',
             doB: '',
@@ -98,24 +127,33 @@ class TrangThemNhanVien extends React.Component {
             overTime: '',
         };
 
+
         if (this.state.touched.name && name.length < 3)
             errors.name = 'Họ và tên cần nhiều hơn 3 ký tự';
         else if (this.state.touched.name && name.length > 30)
             errors.name = 'Họ và tên nhỏ hơn 30 ký tự';
 
-        if (this.state.touched.doB)
+        if (this.state.touched.doB && doB === '')
             errors.doB = "Ngày sinh không được để trống";
 
-        if (this.state.touched.salaryScale > 0)
-            errors.salaryScale = "Hệ số lương không được để trống";
+        if (this.state.touched.salaryScale && salaryScale <= 0)
+            errors.salaryScale = "Hệ số lương phải lớn hơn 0";
 
-        if (this.state.touched.startDate)
+        if (this.state.touched.startDate && startDate === '')
             errors.startDate = "Ngày vào công ty không được để trống";
 
+        if (this.state.touched.department && department === '')
+            errors.department = "Chức vụ không được để trống";
 
+        if (this.state.touched.annualLeave && annualLeave <= 0)
+            errors.annualLeave = "Số ngày nghỉ còn lại không hợp lệ";
+
+        if (this.state.touched.overTime && overTime <= 0)
+            errors.overTime = "Số ngày làm thêm không hợp lệ";
         return errors;
 
     }
+
 
 
 
@@ -132,6 +170,20 @@ class TrangThemNhanVien extends React.Component {
             this.state.annualLeave,
             this.state.overTime,
         );
+
+
+
+        // const { ListChucVu } = this.state;
+
+        // let HTListChucVu = ListChucVu.length > 0
+        //     && ListChucVu.map((item, i) => {
+        //         return (
+        //             <option key={i} value={item.id}>{item.name}</option>
+        //         )
+        //     }, this);
+
+
+
 
         return (
             <div>
@@ -186,7 +238,7 @@ class TrangThemNhanVien extends React.Component {
                                         label="salaryScale"
                                         name="salaryScale"
                                         type="number"
-                                        pattern="[0-9*]"
+                                        // pattern="[0-9*]"
                                         className="form-control"
                                         value={this.state.salaryScale}
                                         valid={errors.salaryScale === ''}
@@ -222,13 +274,15 @@ class TrangThemNhanVien extends React.Component {
                                 <Label htmlFor="department" md={5}>Chức vụ</Label>
                                 <Col md={7}>
                                     <select className="form-control">
+                                        {/* <HTListChucVu /> */}
 
-                                        <option selected value="Sale">Sale</option>
+                                        {/* <option selected value="none"> </option>
+                                        <option value="Sale">Sale</option>
 
                                         <option value="HR">HR</option>
                                         <option value="Marketing">Marketing</option>
                                         <option value="IT">IT</option>
-                                        <option value="Finance">Finance</option>
+                                        <option value="Finance">Finance</option> */}
 
                                     </select>
                                     <FormFeedback>{errors.department}</FormFeedback>
@@ -242,7 +296,7 @@ class TrangThemNhanVien extends React.Component {
                                         label="annualLeave"
                                         name="annualLeave"
                                         type="number"
-                                        pattern="[0-9*]"
+                                        // pattern="[0-9*]"
                                         className="form-control"
                                         value={this.state.annualLeave}
                                         valid={errors.annualLeave === ''}
@@ -262,7 +316,7 @@ class TrangThemNhanVien extends React.Component {
                                         label="overTime"
                                         name="overTime"
                                         type="number"
-                                        pattern="[0-9*]"
+                                        // pattern="[0-9*]"
                                         className="form-control"
                                         value={this.state.overTime}
                                         valid={errors.overTime === ''}
