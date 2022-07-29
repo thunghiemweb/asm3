@@ -36,6 +36,7 @@ class TrangThemNhanVien extends React.Component {
                 overTime: false,
 
             },
+            ok: false,
 
         };
 
@@ -45,8 +46,6 @@ class TrangThemNhanVien extends React.Component {
         this.toggle = this.toggle.bind(this);
 
         console.log(props);
-
-
 
     }
 
@@ -76,36 +75,44 @@ class TrangThemNhanVien extends React.Component {
 
     // sự kiện bấm button
     handleSubmit(event) {
-        // console.log(event);
 
-        // Lấy danh sách nhân viên lưu trong bộ nhớ
-        const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
+        // nếu dữ liêu nhân viên mới ok thì mới thêm vào danh sách
+        if (this.state.ok) {
 
-        console.log(this.state.department);
+            // Lấy danh sách nhân viên lưu trong bộ nhớ
+            const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
 
-        // // Thêm phần tử mới
-        STAFFS.push({
-            id: STAFFS.length + 1,
-            name: this.state.name,
-            doB: this.state.doB,
-            salaryScale: this.state.salaryScale,
-            startDate: this.state.startDate,
-            department: this.state.department,
-            annualLeave: this.state.annualLeave,
-            overTime: this.state.overTime,
-            image: '/assets/images/alberto.png',
-        });
-
-        // Lưu lại
-        localStorage.setItem("dsnv", JSON.stringify(STAFFS));
-
-        //console.log(JSON.parse(localStorage.getItem("dsnv")));
+            // Thêm phần tử mới
+            STAFFS.push({
+                id: STAFFS.length + 1,
+                name: this.state.name,
+                doB: this.state.doB,
+                salaryScale: this.state.salaryScale,
+                startDate: this.state.startDate,
+                department: this.state.department,
+                annualLeave: this.state.annualLeave,
+                overTime: this.state.overTime,
+                image: '/assets/images/alberto.png',
+            });
 
 
+            // Lưu lại
+            //localStorage.setItem("dsnv", JSON.stringify(STAFFS));
+
+            //console.log(JSON.parse(localStorage.getItem("dsnv")));
+
+
+            alert('Current State is: ' + JSON.stringify(this.state));
+        }
 
 
 
-        alert('Current State is: ' + JSON.stringify(this.state));
+
+
+
+
+
+
 
         event.preventDefault();
     }
@@ -119,6 +126,7 @@ class TrangThemNhanVien extends React.Component {
     }
 
     validate(name, doB, salaryScale, startDate, department, annualLeave, overTime) {
+
         const errors = {
             name: '',
             doB: '',
@@ -133,8 +141,11 @@ class TrangThemNhanVien extends React.Component {
         // Chỉ validate khi đã click lần đầu vào inputs
         if (this.state.touched.name && name.length < 2)
             errors.name = 'Yêu cầu nhập nhiều hơn 2 ký tự';
+
+
         else if (this.state.touched.name && name.length > 30)
             errors.name = 'Họ và tên nhỏ hơn 30 ký tự';
+
 
         if (this.state.touched.doB && doB === '')
             errors.doB = "Yêu cầu nhập";
@@ -149,13 +160,25 @@ class TrangThemNhanVien extends React.Component {
             errors.department = "Nhập thiếu chức vụ";
         }
 
-
-
         if (this.state.touched.annualLeave && annualLeave < 0)
             errors.annualLeave = "Số ngày nghỉ còn lại không hợp lệ";
 
         if (this.state.touched.overTime && overTime < 0)
             errors.overTime = "Số ngày làm thêm không hợp lệ";
+
+
+        // if (
+        //     errors.name === '' ||
+        //     errors.doB === '' ||
+        //     errors.salaryScale === '' ||
+        //     errors.startDate === '' ||
+        //     errors.department === '' ||
+        //     errors.annualLeave === '' ||
+        //     errors.overTime === ''
+        // )
+        // this.setState({ ok: true });
+
+
 
         return errors;
     }
@@ -163,6 +186,8 @@ class TrangThemNhanVien extends React.Component {
 
     render() {
 
+
+        // Lấy giá trị từ this.state vào để kiểm tra
         const errors = this.validate(
             this.state.name,
             this.state.doB,

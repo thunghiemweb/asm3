@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 
-// import { STAFFS } from "./shared/staffs"
+import { STAFFS } from "./shared/staffs"
 import { DEPARTMENTS } from "./shared/staffs"
 
 import HTThanhDieuHuong from "./trang/ThanhDieuHuong";
@@ -31,9 +31,19 @@ function App(props) {
   // useState nhận dữ liệu từ Child component 
   const [word, setWord] = useState(null)
 
+  let listNV;
+
   // Lấy danh sách nhân viên lưu trong bộ nhớ
-  const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
-  // console.log(sdfsfd);
+  const ListNVLuu = JSON.parse(localStorage.getItem("dsnv"));
+
+  // Nếu không có dữ liệu từ bộ nhớ sẽ lấy từ file staffs.jsx
+  if (ListNVLuu === null) {
+    listNV = STAFFS;
+  }
+  else {
+    listNV = ListNVLuu;
+  }
+
 
   return (
     <div className="App">
@@ -46,10 +56,10 @@ function App(props) {
       {/* Phần thân trang */}
       <Routes>
 
-        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={STAFFS} />} />
-        <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong dsnv={STAFFS} />} />
+        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={listNV} />} />
+        <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong dsnv={listNV} />} />
 
-        <Route path="/" element={<HTTrangNhanVien dsnv={STAFFS} ChonNV={word => setWord(word)} />} />
+        <Route path="/" element={<HTTrangNhanVien dsnv={listNV} ChonNV={word => setWord(word)} />} />
         <Route path="staffs/*" element={<HTTrangChiTietNV nv={word} />} />
 
         <Route path="LinkTrangThemNhanVien" element={<HTTrangThemNhanVien chucvu={DEPARTMENTS} />} />
