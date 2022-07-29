@@ -36,9 +36,13 @@ function App(props) {
   // Lấy danh sách nhân viên lưu trong bộ nhớ
   const ListNVLuu = JSON.parse(localStorage.getItem("dsnv"));
 
+
+  console.log("sfs" + ListNVLuu);
   // Nếu không có dữ liệu từ bộ nhớ sẽ lấy từ file staffs.jsx
   if (ListNVLuu === null) {
     listNV = STAFFS;
+    localStorage.setItem("dsnv", JSON.stringify(STAFFS));
+    console.log("Đã lưu dữ liệu vào localStorage");
   }
   else {
     listNV = ListNVLuu;

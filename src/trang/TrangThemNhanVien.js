@@ -14,6 +14,7 @@ class TrangThemNhanVien extends React.Component {
 
         this.state = {
             modal: true,
+
             id: '',
             name: '',
             doB: '',
@@ -36,7 +37,7 @@ class TrangThemNhanVien extends React.Component {
                 overTime: false,
 
             },
-            ok: false,
+
 
         };
 
@@ -45,7 +46,7 @@ class TrangThemNhanVien extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.toggle = this.toggle.bind(this);
 
-        console.log(props);
+        // console.log(props);
 
     }
 
@@ -65,8 +66,6 @@ class TrangThemNhanVien extends React.Component {
 
         const name = target.name;
 
-        // console.log(name + ":" + value);
-
         this.setState({
             [name]: value
         });
@@ -76,24 +75,36 @@ class TrangThemNhanVien extends React.Component {
     // sự kiện bấm button
     handleSubmit(event) {
 
+
+
         // nếu dữ liêu nhân viên mới ok thì mới thêm vào danh sách
-        if (this.state.ok) {
+        if (
+            this.state.touched.name &&
+            this.state.touched.doB &&
+            this.state.touched.salaryScale &&
+            this.state.touched.startDate &&
+            this.state.touched.annualLeave &&
+            this.state.touched.overTime
+        ) {
+
+
+
 
             // Lấy danh sách nhân viên lưu trong bộ nhớ
             const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
-
+            console.log("thêm nhân viên" + STAFFS);
             // Thêm phần tử mới
-            STAFFS.push({
-                id: STAFFS.length + 1,
-                name: this.state.name,
-                doB: this.state.doB,
-                salaryScale: this.state.salaryScale,
-                startDate: this.state.startDate,
-                department: this.state.department,
-                annualLeave: this.state.annualLeave,
-                overTime: this.state.overTime,
-                image: '/assets/images/alberto.png',
-            });
+            // STAFFS.push({
+            //     id: STAFFS.length + 1,
+            //     name: this.state.name,
+            //     doB: this.state.doB,
+            //     salaryScale: this.state.salaryScale,
+            //     startDate: this.state.startDate,
+            //     department: this.state.department,
+            //     annualLeave: this.state.annualLeave,
+            //     overTime: this.state.overTime,
+            //     image: '/assets/images/alberto.png',
+            // });
 
 
             // Lưu lại
@@ -102,7 +113,7 @@ class TrangThemNhanVien extends React.Component {
             //console.log(JSON.parse(localStorage.getItem("dsnv")));
 
 
-            alert('Current State is: ' + JSON.stringify(this.state));
+            // alert('Current State is: ' + JSON.stringify(this.state));
         }
 
 
@@ -123,6 +134,7 @@ class TrangThemNhanVien extends React.Component {
         this.setState({
             touched: { ...this.state.touched, [field]: true }
         });
+
     }
 
     validate(name, doB, salaryScale, startDate, department, annualLeave, overTime) {
@@ -165,19 +177,6 @@ class TrangThemNhanVien extends React.Component {
 
         if (this.state.touched.overTime && overTime < 0)
             errors.overTime = "Số ngày làm thêm không hợp lệ";
-
-
-        // if (
-        //     errors.name === '' ||
-        //     errors.doB === '' ||
-        //     errors.salaryScale === '' ||
-        //     errors.startDate === '' ||
-        //     errors.department === '' ||
-        //     errors.annualLeave === '' ||
-        //     errors.overTime === ''
-        // )
-        // this.setState({ ok: true });
-
 
 
         return errors;
@@ -253,7 +252,7 @@ class TrangThemNhanVien extends React.Component {
                                         label="salaryScale"
                                         name="salaryScale"
                                         type="number"
-                                        // pattern="[0-9*]"
+                                        pattern="[0-9*]"
                                         className="form-control"
                                         value={this.state.salaryScale}
                                         valid={errors.salaryScale === ''}
