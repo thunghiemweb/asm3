@@ -3,6 +3,17 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { useRef } from 'react'
 
+
+// import {
+//     Button,
+//     Form,
+//     FormGroup,
+//     Label,
+//     Input,
+//     FormText,
+//     Row, Col,
+// } from 'reactstrap';
+
 function TrangNhanVien(props) {
 
     const [ListNhanVien, setListNhanVien] = useState(props.dsnv);
@@ -58,6 +69,7 @@ function TrangNhanVien(props) {
             <h1>Nhân viên</h1>
             <div className='container'>
 
+
                 {/* Tìm kiếm nhân viên */}
                 <div style={{ margin: "10px" }}>
 
@@ -76,7 +88,6 @@ function TrangNhanVien(props) {
                         onClick={handleTroLai}>
                         Trở lại</button>
 
-                    {/* <Link to={'LinkTrangTaoNhanVienMoi/'} > */}
                     <Link to={'LinkTrangThemNhanVien/'} >
                         <button
                             style={{ margin: "10px" }}>

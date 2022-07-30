@@ -26,28 +26,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App(props) {
 
-
-
   // useState nhận dữ liệu từ Child component 
-  const [word, setWord] = useState(null)
+  const [NhanVienDuocChon, setNhanVienDuocChon] = useState(null);
 
-  let listNV;
+  const [listNV, setlistNV] = useState(STAFFS);
 
-  // Lấy danh sách nhân viên lưu trong bộ nhớ
-  const ListNVLuu = JSON.parse(localStorage.getItem("dsnv"));
-
-
-  console.log("sfs" + ListNVLuu);
-  // Nếu không có dữ liệu từ bộ nhớ sẽ lấy từ file staffs.jsx
-  if (ListNVLuu === null) {
-    listNV = STAFFS;
-    localStorage.setItem("dsnv", JSON.stringify(STAFFS));
-    console.log("Đã lưu dữ liệu vào localStorage");
-  }
-  else {
-    listNV = ListNVLuu;
-  }
-
+  // console.log(listNV);
 
   return (
     <div className="App">
@@ -55,18 +39,33 @@ function App(props) {
       {/* Phần đầu trang */}
       <HTThanhDieuHuong />
 
-      {/* <h1>----- {word} </h1> */}
-
       {/* Phần thân trang */}
       <Routes>
 
-        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={listNV} />} />
+        {/* Lấy dữ liệu từ trang nhân viên để gửi sang trang chi tiết nhân viên */}
+        <Route path="/"
+          element={<HTTrangNhanVien dsnv={listNV} ChonNV={NhanVienDuocChon => setNhanVienDuocChon(NhanVienDuocChon)} />}
+        />
+
+
+        {/* Nhận chi tiết nhân viên để hiển thị */}
+        <Route path="staffs/*" element={<HTTrangChiTietNV nv={NhanVienDuocChon} />} />
+
+
+        <Route path="LinkTrangThemNhanVien"
+          element={
+            <HTTrangThemNhanVien
+              chucvu={DEPARTMENTS}
+              dsnv={listNV}
+
+              dsnvmoi={listNV => setlistNV(listNV)}
+            />}
+        />
+
+        <Route path="LinkTrangPhongBan" element={<HTTrangPhongBan chucvu={DEPARTMENTS} dsnv={STAFFS} />} />
+
         <Route path="LinkTrangBangLuong" element={<HTTrangBangLuong dsnv={listNV} />} />
 
-        <Route path="/" element={<HTTrangNhanVien dsnv={listNV} ChonNV={word => setWord(word)} />} />
-        <Route path="staffs/*" element={<HTTrangChiTietNV nv={word} />} />
-
-        <Route path="LinkTrangThemNhanVien" element={<HTTrangThemNhanVien chucvu={DEPARTMENTS} />} />
 
       </Routes>
 

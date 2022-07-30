@@ -7,6 +7,8 @@ import {
     Input,
 
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
 
 class TrangThemNhanVien extends React.Component {
     constructor(props) {
@@ -20,7 +22,7 @@ class TrangThemNhanVien extends React.Component {
             doB: '',
             salaryScale: 1,
             startDate: '',
-            department: '',
+            department: 'chọn chức vụ',
             annualLeave: 0,
             overTime: 0,
             image: '/assets/images/alberto.png',
@@ -41,11 +43,21 @@ class TrangThemNhanVien extends React.Component {
 
         };
 
+        // thêm vào đầu để tạo giá trị mặc định
+        this.props.chucvu.unshift({
+            id: "Dept00",
+            name: "Chọn chức vụ",
+            numberOfStaff: 0
+        });
+
+        // console.log(this.props.chucvu);
+
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.toggle = this.toggle.bind(this);
-
+        console.log('Thêm nhân viên');
         // console.log(props);
 
     }
@@ -73,9 +85,7 @@ class TrangThemNhanVien extends React.Component {
     }
 
     // sự kiện bấm button
-    handleSubmit(event) {
-
-
+    handleSubmit() {
 
         // nếu dữ liêu nhân viên mới ok thì mới thêm vào danh sách
         if (
@@ -86,46 +96,40 @@ class TrangThemNhanVien extends React.Component {
             this.state.touched.annualLeave &&
             this.state.touched.overTime
         ) {
+            console.log("Dữ liệu hợp lệ");
+
+            let parsedArr = this.props.dsnv;
+            console.log(parsedArr);
+
+            //lấy chức vụ có id là  this.state.department
+            const DEPARTMENTS = this.props.chucvu.find(e => e.id === this.state.department);
+            DEPARTMENTS.numberOfStaff = DEPARTMENTS.numberOfStaff + 1;
+
+            const NhanVienMoi = {
+                id: parsedArr.length + 1,
+                name: this.state.name,
+                doB: this.state.doB,
+                salaryScale: this.state.salaryScale,
+                startDate: this.state.startDate,
+                department: DEPARTMENTS,
+                annualLeave: this.state.annualLeave,
+                overTime: this.state.overTime,
+                image: '/assets/images/alberto.png',
+            }
+
+            console.log(NhanVienMoi);
+
+            parsedArr.push(NhanVienMoi);
+
+            // Gửi danh sách mới về app.js
+            this.props.dsnvmoi(parsedArr);
 
 
-
-
-            // Lấy danh sách nhân viên lưu trong bộ nhớ
-            const STAFFS = JSON.parse(localStorage.getItem("dsnv"));
-            console.log("thêm nhân viên" + STAFFS);
-            // Thêm phần tử mới
-            // STAFFS.push({
-            //     id: STAFFS.length + 1,
-            //     name: this.state.name,
-            //     doB: this.state.doB,
-            //     salaryScale: this.state.salaryScale,
-            //     startDate: this.state.startDate,
-            //     department: this.state.department,
-            //     annualLeave: this.state.annualLeave,
-            //     overTime: this.state.overTime,
-            //     image: '/assets/images/alberto.png',
-            // });
-
-
-            // Lưu lại
-            //localStorage.setItem("dsnv", JSON.stringify(STAFFS));
-
-            //console.log(JSON.parse(localStorage.getItem("dsnv")));
-
-
-            // alert('Current State is: ' + JSON.stringify(this.state));
+        }
+        else {
+            console.log("Dữ liệu không hợp lệ")
         }
 
-
-
-
-
-
-
-
-
-
-        event.preventDefault();
     }
 
     // Xử lý thông báo lỗi từng dòng input
@@ -168,20 +172,21 @@ class TrangThemNhanVien extends React.Component {
         if (this.state.touched.startDate && startDate === '')
             errors.startDate = "Ngày vào công ty không được để trống";
 
-        if (this.state.touched.department && department === "") {
+        if (this.state.touched.department && department === "chọn chức vụ") {
             errors.department = "Nhập thiếu chức vụ";
         }
 
         if (this.state.touched.annualLeave && annualLeave < 0)
+            errors.annualLeave = "Số ngày nghỉ < 0 không hợp lệ";
+        else if (this.state.touched.annualLeave && annualLeave > 10)
             errors.annualLeave = "Số ngày nghỉ còn lại không hợp lệ";
 
         if (this.state.touched.overTime && overTime < 0)
-            errors.overTime = "Số ngày làm thêm không hợp lệ";
+            errors.overTime = "Số ngày làm thêm < 0 (không hợp lệ)";
 
 
         return errors;
     }
-
 
     render() {
 
@@ -206,7 +211,8 @@ class TrangThemNhanVien extends React.Component {
                     <ModalHeader toggle={this.toggle}>Nhập thông tin của nhân viên mới</ModalHeader>
                     <ModalBody>
 
-                        <Form onSubmit={this.handleSubmit}>
+                        {/* <Form onSubmit={this.handleSubmit}> */}
+                        <Form >
 
                             <Row className="form-group">
                                 <Label htmlFor="name" md={5}>Họ và tên</Label>
@@ -294,6 +300,7 @@ class TrangThemNhanVien extends React.Component {
                                         onChange={this.handleInputChange}
                                         onBlur={this.handleBlur('department')}
                                     >
+
                                         {this.props.chucvu.map((option, index) => (
                                             <option
                                                 key={index}
@@ -349,12 +356,14 @@ class TrangThemNhanVien extends React.Component {
                                 </Col>
                             </Row>
 
-                            <ModalFooter>
-                                <Button type="submit" color="primary" onClick={this.toggle}>Thêm</Button>
-                                {/* <Button name="huy" type="submit" color="secondary" onClick={this.toggle}>Hủy</Button> */}
-                            </ModalFooter>
-
                         </Form>
+                        <ModalFooter>
+                            <Button name="them" type="submit" color="primary" onClick={this.handleSubmit}>Thêm</Button>
+                            <Link to={'/'} >
+                                <Button name="quaylai" type="submit" color="secondary" onClick={this.toggle}>Quay lại</Button>
+                            </Link>
+
+                        </ModalFooter>
 
                     </ModalBody>
 
