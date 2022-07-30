@@ -116,7 +116,7 @@ class TrangThemNhanVien extends React.Component {
                 overTime: this.state.overTime,
                 image: '/assets/images/alberto.png',
             }
-
+            alert("Đã thêm nhân viên " + this.state.name);
             console.log(NhanVienMoi);
 
             parsedArr.push(NhanVienMoi);
